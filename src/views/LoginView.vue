@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import hitLogo from "@/assets/hit-logo.jpeg";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   clubTitle: {
@@ -8,14 +9,13 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["login"]);
-
+const router = useRouter();
 const handleLogin = () => {
   if (!username.value || !password.value) {
     return alert("Invalid data");
   }
 
-  emit("login", { username: username.value, password: password.value });
+  router.push("/dashboard");
 };
 
 const username = ref("");

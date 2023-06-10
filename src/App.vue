@@ -1,10 +1,8 @@
 <script setup>
 import { ref, computed } from "vue";
+import { RouterLink, RouterView } from "vue-router";
 import hitLogo from "@/assets/hit-logo.jpeg";
-import HITLogin from "./components/HitLogin.vue";
 
-const isLoggedIn = ref(false);
-const userLoggedIn = ref("");
 const clubName = ref("HIT");
 const clubGenerationNumber = ref(13);
 
@@ -16,7 +14,7 @@ const navigationLinks = [
   {
     id: 1,
     name: "Home",
-    path: "home",
+    path: "/",
   },
   {
     id: 2,
@@ -44,26 +42,21 @@ const navigationLinks = [
     path: "olp",
   },
 ];
-
-const handleLogin = (userCredential) => {
-  userLoggedIn.value = userCredential.username;
-  isLoggedIn.value = !isLoggedIn.value;
-};
 </script>
 <template>
-  <div class="home-page">
+  <div class="app-container">
     <header class="header">
       <div class="brand">
         <img class="logo" :src="hitLogo" alt="HIT CLUB LOGO" />
         <h1 class="title">{{ clubTitle }}</h1>
       </div>
       <div class="navigation-bar">
-        <a
+        <RouterLink
           class="link"
           v-for="link in navigationLinks"
           :href="link.path"
-          :key="link.id"
-          >{{ link.name }}</a
+          :to="link.path"
+          >{{ link.name }}</RouterLink
         >
       </div>
       <div v-if="isLoggedIn" class="user-info">
@@ -71,16 +64,18 @@ const handleLogin = (userCredential) => {
         <h3 class="name">{{ userLoggedIn }}</h3>
       </div>
       <div v-else class="user-actions">
-        <button type="button" class="login">Login</button>
+        <button type="button" class="login">
+          <RouterLink to="login">Login</RouterLink>
+        </button>
       </div>
     </header>
     <main class="main-content">
-      <HITLogin :club-title="clubTitle" @login="handleLogin" />
+      <RouterView></RouterView>
     </main>
   </div>
 </template>
 <style>
-.home-page > .header {
+.app-container > .header {
   padding: 0 32px;
   border-bottom: 1px solid orange;
   display: flex;
@@ -89,37 +84,37 @@ const handleLogin = (userCredential) => {
   gap: 32px;
 }
 
-.home-page > .header > .brand {
+.app-container > .header > .brand {
   display: flex;
   align-items: center;
 }
 
-.home-page > .header > .brand > .title {
+.app-container > .header > .brand > .title {
   font-weight: 600;
   margin-left: 8px;
   color: orange;
 }
 
-.home-page > .header > .brand > .logo {
+.app-container > .header > .brand > .logo {
   width: 50px;
   height: 50px;
 }
 
-.home-page > .header > .navigation-bar {
+.app-container > .header > .navigation-bar {
   flex-grow: 1;
   display: flex;
   gap: 48px;
   justify-content: center;
 }
 
-.home-page > .header > .navigation-bar > .link {
+.app-container > .header > .navigation-bar > .link {
   color: #333;
   text-decoration: none;
   font-size: 20px;
   font-weight: 600;
 }
 
-.home-page > .header > .user-info {
+.app-container > .header > .user-info {
   width: 15%;
   display: flex;
   align-items: center;
@@ -128,14 +123,14 @@ const handleLogin = (userCredential) => {
   justify-content: flex-end;
 }
 
-.home-page > .header > .user-info > .avatar {
+.app-container > .header > .user-info > .avatar {
   height: 50px;
   width: 50px;
   background-color: orange;
   border-radius: 50%;
 }
 
-.home-page > .header > .user-actions {
+.app-container > .header > .user-actions {
   width: 15%;
   display: flex;
   align-items: center;
@@ -143,7 +138,7 @@ const handleLogin = (userCredential) => {
   gap: 8px;
 }
 
-.home-page > .header > .user-actions > .login {
+.app-container > .header > .user-actions > .login {
   padding: 8px 16px;
   cursor: pointer;
   background-color: orange;
@@ -153,11 +148,11 @@ const handleLogin = (userCredential) => {
   border-radius: 8px;
 }
 
-.home-page > .header > .user-actions > .login:hover {
+.app-container > .header > .user-actions > .login:hover {
   background-color: rgb(247, 198, 106);
 }
 
-.home-page > .main-content {
+.app-container > .main-content {
   padding: 32px;
 }
 </style>
