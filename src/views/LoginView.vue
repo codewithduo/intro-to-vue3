@@ -1,7 +1,14 @@
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import hitLogo from "@/assets/hit-logo.jpeg";
 import { useRouter } from "vue-router";
+
+const clubName = ref("HIT");
+const clubGenerationNumber = ref(13);
+
+const clubTitle = computed(() => {
+  return `${clubName.value} ${clubGenerationNumber.value}`;
+});
 
 const props = defineProps({
   clubTitle: {

@@ -1,6 +1,6 @@
 <script setup></script>
 <template>
-  <div class="dashboard-page">Dashboard</div>
+  <div class="dashboard-layout">Dashboard Layout</div>
 </template>
 
 <style scoped></style>
